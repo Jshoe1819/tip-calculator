@@ -25,6 +25,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var billTotalTextField: UITextField!
     @IBOutlet weak var roundSelectorController: UISegmentedControl!
     @IBOutlet weak var incrementSelectorController: UISegmentedControl!
+    @IBOutlet weak var totalCostLabel: UILabel!
     
     override func viewWillAppear(_ animated: Bool) {
         NotificationCenter.default.addObserver(
@@ -39,7 +40,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         billTotalTextField.becomeFirstResponder()
-        
+        billTotalTextField.addTarget(self, action: #selector(ViewController.billTotalTextFieldDidChange(_:)), for: UIControl.Event.editingChanged)
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
@@ -48,6 +49,25 @@ class ViewController: UIViewController {
             stackBottomLayoutConstraint.constant = keyboardHeight + 20
         }
     }
+    
+    @objc func billTotalTextFieldDidChange(_ textField: UITextField) {
+        
+        if let text = billTotalTextField.text {
+            
+            if text.count == 1 && !text.contains("$") {
+                billTotalTextField.text = "$\(text)"
+                totalCostLabel.text = "$\(text)"
+            } else if text != "" {
+                totalCostLabel.text = text
+            } else {
+                totalCostLabel.text = "$0.00"
+            }
+            
+        }
+        
+    }
+    
+    
     @IBAction func roundSelectControllerPressed(_ sender: Any) {
         let index = roundSelectorController.selectedSegmentIndex
         print(index)
@@ -58,13 +78,11 @@ class ViewController: UIViewController {
         } else if index == 2 {
             incrementSelectorController.isEnabled = true
         } else {
+            incrementSelectorController.selectedSegmentIndex = 0
             incrementSelectorController.isEnabled = false
         }
         
-        
     }
-    
-
 
 }
 

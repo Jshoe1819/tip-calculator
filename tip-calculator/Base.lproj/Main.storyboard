@@ -240,6 +240,7 @@
                         <outlet property="incrementSelectorController" destination="sWX-jJ-ePD" id="Nei-BR-PV2"/>
                         <outlet property="roundSelectorController" destination="slU-cv-EII" id="Amx-Bm-KWC"/>
                         <outlet property="stackBottomLayoutConstraint" destination="eTt-Tp-pI3" id="ZJW-ND-mDB"/>
+                        <outlet property="totalCostLabel" destination="g0X-x7-kO0" id="Bxa-Gw-USr"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
