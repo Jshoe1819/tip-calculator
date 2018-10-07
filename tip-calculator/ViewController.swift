@@ -6,7 +6,6 @@
 //  Copyright © 2018 Jacob Shoemaker. All rights reserved.
 //
 
-//allow round to if round split not none
 //format of bill total input
 //format of tip input
 //change tip % if tip input
@@ -53,7 +52,14 @@ class ViewController: UIViewController {
         let index = roundSelectorController.selectedSegmentIndex
         print(index)
         
-        
+        if index == 0 {
+            //do other cost stuff
+            incrementSelectorController.isEnabled = true
+        } else if index == 2 {
+            incrementSelectorController.isEnabled = true
+        } else {
+            incrementSelectorController.isEnabled = false
+        }
         
         
     }
