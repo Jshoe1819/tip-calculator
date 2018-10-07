@@ -141,6 +141,16 @@ class ViewController: UIViewController, UITextFieldDelegate {
         }
         return true
     }
+    @IBAction func tipSliderSlid(_ sender: Any) {
+        //change tip textfield
+        tipPercentLabel.text = "\(Int(tipSlider.value))%"
+    }
+    
+    @IBAction func splitSliderSlid(_ sender: Any) {
+        //calculate split cost
+        splitLabel.text = "\(Int(splitSlider.value))"
+    }
+    
     
     @IBAction func roundSelectControllerPressed(_ sender: Any) {
         let index = roundSelectorController.selectedSegmentIndex
