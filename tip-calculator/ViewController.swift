@@ -6,8 +6,6 @@
 //  Copyright © 2018 Jacob Shoemaker. All rights reserved.
 //
 
-//format of bill total input
-//format of tip input
 //change tip % if tip input
 //change tip % when slider change
 //change tip input when slider change
@@ -42,7 +40,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
         billTotalTextField.becomeFirstResponder()
         billTotalTextField.delegate = self
         billTotalTextField.addTarget(self, action: #selector(ViewController.billTotalTextFieldDidChange(_:)), for: UIControl.Event.editingChanged)
-        //tipTotalTextField.delegate = self
+        tipTotalTextField.delegate = self
+        tipTotalTextField.addTarget(self, action: #selector(ViewController.tipTotalTextFieldDidChange(_:)), for: UIControl.Event.editingChanged)
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
@@ -67,6 +66,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
             } else if text == "$." {
                 billTotalTextField.text = "$0."
                 totalCostLabel.text = "$0."
+            } else if text == "$0" {
+                billTotalTextField.text = "$"
+                totalCostLabel.text = "$"
             }
             else if text != "" {
                 totalCostLabel.text = text
@@ -78,9 +80,38 @@ class ViewController: UIViewController, UITextFieldDelegate {
         
     }
     
+    @objc func tipTotalTextFieldDidChange(_ textField: UITextField) {
+        
+        if let text = tipTotalTextField.text {
+            
+            if text.count == 1 && !text.contains("$") {
+                if text.first == "." {
+                    tipTotalTextField.text = "$0\(text)"
+                    //totalCostLabel.text = "$\(text)"
+                } else {
+                    tipTotalTextField.text = "$\(text)"
+                    //totalCostLabel.text = "$\(text)"
+                }
+            } else if text == "$." {
+                tipTotalTextField.text = "$0."
+                //totalCostLabel.text = "$0."
+            } else if text == "$0" {
+                tipTotalTextField.text = "$"
+                //totalCostLabel.text = "$"
+            }
+            else if text != "" {
+                //totalCostLabel.text = text
+            } else {
+                //totalCostLabel.text = "$0.00"
+            }
+            
+        }
+        
+    }
+    
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if let text = textField.text {
-            print("hi: \(string)")
+            //print("hi: \(string)")
             let decimalIndex = text.firstIndex(of: ".")
             if decimalIndex != nil && string == "." {
                 return false
@@ -90,7 +121,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 return false
             } else if text == "$" && string == "0" {
                 return false
-            } else {
+            }
+            else {
                 return true
             }
         }
@@ -99,7 +131,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func roundSelectControllerPressed(_ sender: Any) {
         let index = roundSelectorController.selectedSegmentIndex
-        print(index)
+        //print(index)
         
         if index == 0 {
             //do other cost stuff
