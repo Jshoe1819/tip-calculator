@@ -239,7 +239,12 @@
                         <outlet property="billTotalTextField" destination="QJi-3n-J4L" id="kD8-4Z-bZT"/>
                         <outlet property="incrementSelectorController" destination="sWX-jJ-ePD" id="Nei-BR-PV2"/>
                         <outlet property="roundSelectorController" destination="slU-cv-EII" id="Amx-Bm-KWC"/>
+                        <outlet property="splitCostLabel" destination="AQF-XT-7bn" id="E3L-qA-058"/>
+                        <outlet property="splitLabel" destination="3a0-CD-PtH" id="v11-aM-9aZ"/>
+                        <outlet property="splitSlider" destination="GlS-aa-Y8b" id="3yJ-EA-HM2"/>
                         <outlet property="stackBottomLayoutConstraint" destination="eTt-Tp-pI3" id="ZJW-ND-mDB"/>
+                        <outlet property="tipPercentLabel" destination="R1d-Hw-bLg" id="vTz-yk-iFl"/>
+                        <outlet property="tipSlider" destination="tfg-tK-0mx" id="axy-Ni-G3x"/>
                         <outlet property="tipTotalTextField" destination="kSf-I6-KW0" id="Ayo-RL-vzl"/>
                         <outlet property="totalCostLabel" destination="g0X-x7-kO0" id="Bxa-Gw-USr"/>
                     </connections>

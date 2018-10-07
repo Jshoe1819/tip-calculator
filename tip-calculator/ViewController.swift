@@ -6,13 +6,14 @@
 //  Copyright © 2018 Jacob Shoemaker. All rights reserved.
 //
 
-//change tip % if tip input
+//change tip % if tip input - model
 //change tip % when slider change
-//change tip input when slider change
+//change tip input when slider change - model
+//change total cost with tip change - model
 //change split when split slider change
-//adjust total cost
-//adjust split cost if round changed
-//adjust split cost if round to change
+//adjust total cost - model
+//adjust split cost if round changed - model
+//adjust split cost if round to change - model
 
 import UIKit
 
@@ -24,6 +25,11 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var incrementSelectorController: UISegmentedControl!
     @IBOutlet weak var totalCostLabel: UILabel!
     @IBOutlet weak var tipTotalTextField: UITextField!
+    @IBOutlet weak var tipPercentLabel: UILabel!
+    @IBOutlet weak var tipSlider: UISlider!
+    @IBOutlet weak var splitSlider: UISlider!
+    @IBOutlet weak var splitLabel: UILabel!
+    @IBOutlet weak var splitCostLabel: UILabel!
     
     override func viewWillAppear(_ animated: Bool) {
         NotificationCenter.default.addObserver(
@@ -81,13 +87,20 @@ class ViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func tipTotalTextFieldDidChange(_ textField: UITextField) {
-        
+        //use model to calculate tip%
         if let text = tipTotalTextField.text {
+            if text.first == "$" {
+                let tipDouble = Double(text.dropFirst())
+                print(tipDouble)
+            } else {
+                let tipDouble = Double(text)
+                print(tipDouble)
+            }
             
             if text.count == 1 && !text.contains("$") {
                 if text.first == "." {
                     tipTotalTextField.text = "$0\(text)"
-                    //totalCostLabel.text = "$\(text)"
+                    //tipPercentLabel.text = "\(tipTotalTextField.text as! Double / billTotalTextField.text as! Double)"
                 } else {
                     tipTotalTextField.text = "$\(text)"
                     //totalCostLabel.text = "$\(text)"
