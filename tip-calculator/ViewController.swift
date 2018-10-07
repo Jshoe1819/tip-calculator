@@ -6,11 +6,11 @@
 //  Copyright © 2018 Jacob Shoemaker. All rights reserved.
 //
 
+//update tip text inout based on slider change
+//update split cost based on split slider change
 //change tip % if tip input - model
-//change tip % when slider change
 //change tip input when slider change - model
 //change total cost with tip change - model
-//change split when split slider change
 //adjust total cost - model
 //adjust split cost if round changed - model
 //adjust split cost if round to change - model
@@ -144,6 +144,20 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBAction func tipSliderSlid(_ sender: Any) {
         //change tip textfield
         tipPercentLabel.text = "\(Int(tipSlider.value))%"
+        
+        if let text = billTotalTextField.text {
+            let start = text.index(text.startIndex, offsetBy: 1)
+            let end = text.endIndex
+            let range = start..<end
+            print("HI: \(text[range])")
+            let calculation = Double(tipSlider.value) / 100.0 * Double(text[range])!
+            print(calculation)
+            tipTotalTextField.text = "$\(String(format: "%.2f", calculation))"
+            
+        } else {
+            tipTotalTextField.text = ""
+        }
+        
     }
     
     @IBAction func splitSliderSlid(_ sender: Any) {
@@ -157,9 +171,10 @@ class ViewController: UIViewController, UITextFieldDelegate {
         //print(index)
         
         if index == 0 {
-            //do other cost stuff
+            //round down split cost to selected round to
             incrementSelectorController.isEnabled = true
         } else if index == 2 {
+            //round up split cost to selected round to
             incrementSelectorController.isEnabled = true
         } else {
             incrementSelectorController.selectedSegmentIndex = 0
