@@ -6,7 +6,6 @@
 //  Copyright © 2018 Jacob Shoemaker. All rights reserved.
 //
 
-//bottom height update
 //allow round to if round split not none
 //format of bill total input
 //format of tip input
@@ -23,10 +22,42 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var stackBottomLayoutConstraint: NSLayoutConstraint!
+    @IBOutlet weak var billTotalTextField: UITextField!
+    @IBOutlet weak var roundSelectorController: UISegmentedControl!
+    @IBOutlet weak var incrementSelectorController: UISegmentedControl!
+    
+    override func viewWillAppear(_ animated: Bool) {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillShow),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        billTotalTextField.becomeFirstResponder()
+        
     }
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            let keyboardHeight = keyboardSize.height
+            stackBottomLayoutConstraint.constant = keyboardHeight + 20
+        }
+    }
+    @IBAction func roundSelectControllerPressed(_ sender: Any) {
+        let index = roundSelectorController.selectedSegmentIndex
+        print(index)
+        
+        
+        
+        
+    }
+    
 
 
 }
