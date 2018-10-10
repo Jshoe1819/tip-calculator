@@ -154,15 +154,14 @@ class ViewController: UIViewController, UITextFieldDelegate {
     }
     
     func updateTip() {
-        
         if let text = billTotalTextField.text {
             if text != "" {
                 let start = text.index(text.startIndex, offsetBy: 1)
                 let end = text.endIndex
                 let range = start..<end
-                print("HI: \(text[range])")
+                //print("HI: \(text[range])")
                 let calculation = Double(tipSlider.value) / 100.0 * Double(text[range])!
-                print(calculation)
+                //print(calculation)
                 tipTotalTextField.text = "$\(String(format: "%.2f", calculation))"
             }
             
@@ -182,30 +181,54 @@ class ViewController: UIViewController, UITextFieldDelegate {
                     let tipEnd = tipText.endIndex
                     let tipRange = tipStart..<tipEnd
                     let calculation = Double(text[range])! + Double(tipText[tipRange])!
-                    print(calculation)
+                    //print(calculation)
                     totalCostLabel.text = "$\(String(format: "%.2f", calculation))"
+                } else {
+                    totalCostLabel.text = "$0.00"
                 }
                 
-            } else {
-                tipTotalTextField.text = ""
             }
         }
         
     }
     
-    //total cost text function
+    func updateSplitCost() {
+        if let text = totalCostLabel.text {
+            if text != "" || text != "$" {
+                let start = text.index(text.startIndex, offsetBy: 1)
+                let end = text.endIndex
+                let range = start..<end
+                //print("HI: \(text[range])")
+                let calculation = Double(text[range])! / Double(splitSlider.value)
+                //print(calculation)
+                splitCostLabel.text = "$\(String(format: "%.2f", calculation))"
+            }
+            
+        } else {
+            tipTotalTextField.text = ""
+        }
+    }
+    
     //split cost function
     
     @IBAction func tipSliderSlid(_ sender: Any) {
         //change tip textfield
+        let roundedValue = round(tipSlider.value)
+        tipSlider.value = roundedValue
+        print(tipSlider.value)
         tipPercentLabel.text = "\(Int(tipSlider.value))%"
         updateTip()
         updateTotalCost()
+        updateSplitCost()
     }
     
     @IBAction func splitSliderSlid(_ sender: Any) {
         //calculate split cost
+        let roundedValue = round(splitSlider.value)
+        splitSlider.value = roundedValue
+        
         splitLabel.text = "\(Int(splitSlider.value))"
+        updateSplitCost()
     }
     
     
