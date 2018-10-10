@@ -6,7 +6,6 @@
 //  Copyright © 2018 Jacob Shoemaker. All rights reserved.
 //
 
-//update tip text inout based on slider change
 //update split cost based on split slider change
 //change tip % if tip input - model
 //change tip input when slider change - model
@@ -18,7 +17,7 @@
 import UIKit
 
 class ViewController: UIViewController, UITextFieldDelegate {
-
+    
     @IBOutlet weak var stackBottomLayoutConstraint: NSLayoutConstraint!
     @IBOutlet weak var billTotalTextField: UITextField!
     @IBOutlet weak var roundSelectorController: UISegmentedControl!
@@ -38,7 +37,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
             name: UIResponder.keyboardWillShowNotification,
             object: nil
         )
-
+        
     }
     
     override func viewDidLoad() {
@@ -65,21 +64,33 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 if text.first == "." {
                     billTotalTextField.text = "$0\(text)"
                     totalCostLabel.text = "$\(text)"
+                    updateTip()
+                    updateTotalCost()
                 } else {
                     billTotalTextField.text = "$\(text)"
                     totalCostLabel.text = "$\(text)"
+                    updateTip()
+                    updateTotalCost()
                 }
             } else if text == "$." {
                 billTotalTextField.text = "$0."
                 totalCostLabel.text = "$0."
+                updateTip()
+                updateTotalCost()
             } else if text == "$0" {
                 billTotalTextField.text = "$"
                 totalCostLabel.text = "$"
+                updateTip()
+                updateTotalCost()
             }
             else if text != "" {
                 totalCostLabel.text = text
+                updateTip()
+                updateTotalCost()
             } else {
                 totalCostLabel.text = "$0.00"
+                updateTip()
+                updateTotalCost()
             }
             
         }
@@ -91,10 +102,10 @@ class ViewController: UIViewController, UITextFieldDelegate {
         if let text = tipTotalTextField.text {
             if text.first == "$" {
                 let tipDouble = Double(text.dropFirst())
-                print(tipDouble)
+                print("\(String(describing: tipDouble))")
             } else {
                 let tipDouble = Double(text)
-                print(tipDouble)
+                print("\(String(describing: tipDouble))")
             }
             
             if text.count == 1 && !text.contains("$") {
@@ -141,23 +152,55 @@ class ViewController: UIViewController, UITextFieldDelegate {
         }
         return true
     }
-    @IBAction func tipSliderSlid(_ sender: Any) {
-        //change tip textfield
-        tipPercentLabel.text = "\(Int(tipSlider.value))%"
+    
+    func updateTip() {
         
         if let text = billTotalTextField.text {
-            let start = text.index(text.startIndex, offsetBy: 1)
-            let end = text.endIndex
-            let range = start..<end
-            print("HI: \(text[range])")
-            let calculation = Double(tipSlider.value) / 100.0 * Double(text[range])!
-            print(calculation)
-            tipTotalTextField.text = "$\(String(format: "%.2f", calculation))"
+            if text != "" {
+                let start = text.index(text.startIndex, offsetBy: 1)
+                let end = text.endIndex
+                let range = start..<end
+                print("HI: \(text[range])")
+                let calculation = Double(tipSlider.value) / 100.0 * Double(text[range])!
+                print(calculation)
+                tipTotalTextField.text = "$\(String(format: "%.2f", calculation))"
+            }
             
         } else {
             tipTotalTextField.text = ""
         }
+    }
+    
+    func updateTotalCost() {
+        if let text = billTotalTextField.text {
+            if let tipText = tipTotalTextField.text {
+                if text != "" {
+                    let start = text.index(text.startIndex, offsetBy: 1)
+                    let end = text.endIndex
+                    let range = start..<end
+                    let tipStart = tipText.index(tipText.startIndex, offsetBy: 1)
+                    let tipEnd = tipText.endIndex
+                    let tipRange = tipStart..<tipEnd
+                    let calculation = Double(text[range])! + Double(tipText[tipRange])!
+                    print(calculation)
+                    totalCostLabel.text = "$\(String(format: "%.2f", calculation))"
+                }
+                
+            } else {
+                tipTotalTextField.text = ""
+            }
+        }
         
+    }
+    
+    //total cost text function
+    //split cost function
+    
+    @IBAction func tipSliderSlid(_ sender: Any) {
+        //change tip textfield
+        tipPercentLabel.text = "\(Int(tipSlider.value))%"
+        updateTip()
+        updateTotalCost()
     }
     
     @IBAction func splitSliderSlid(_ sender: Any) {
@@ -182,6 +225,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
         }
         
     }
-
+    
 }
 
