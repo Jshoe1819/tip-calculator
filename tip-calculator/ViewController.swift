@@ -208,8 +208,14 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 let rangeTotal = startTotal..<endTotal
                 //print("HI: \(text[range])")
                 let calculation = Double(text[rangeTotal])! / Double(splitSlider.value)
-                
-                //let startBill =
+                //                if let billText = billTotalTextField.text {
+                //                    if billText != "" && billText != "$" {
+                //                        let startBill = billText.index(billText.startIndex, offsetBy: 1)
+                //                        let endBill = billText.endIndex
+                //                        let rangeBill = startBill..<endBill
+                //                        //print(Double(billText[rangeBill])!)
+                //                    }
+                //                }
                 
                 let roundTo = incrementSelectorController.selectedSegmentIndex
                 let roundDirection = roundSelectorController.selectedSegmentIndex
@@ -224,13 +230,35 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 
                 if roundDirection == 0 {
                     //need logic to make sure not less than split cost
-                    if floor(calculation * denominator) / denominator < Double(text[rangeTotal])! {
-                        print(floor(calculation * denominator) / denominator)
-                        print(Double(text[rangeTotal])!)
-                        splitCostLabel.text = "$\(String(format: "%.2f", calculation))"
-                    } else {
-                        splitCostLabel.text = "$\(String(format: "%.2f",floor(calculation * denominator) / denominator))"
+                    
+                    if let billText = billTotalTextField.text {
+                        if billText != "" && billText != "$" {
+                            let startBill = billText.index(billText.startIndex, offsetBy: 1)
+                            let endBill = billText.endIndex
+                            let rangeBill = startBill..<endBill
+                            //print(Double(billText[rangeBill])!)
+                            
+                            if floor(calculation * denominator) / denominator * Double(splitSlider.value ) <= Double(billText[rangeBill])! {
+                                print(floor(calculation * denominator) / denominator)
+                                print(Double(billText[rangeBill])!)
+                                splitCostLabel.text = "$\(String(format: "%.2f", calculation))"
+                                //                                splitCostLabel.text = "$\(String(format: "%.2f",floor(calculation * denominator) / denominator))"
+                            } else {
+                                splitCostLabel.text = "$\(String(format: "%.2f",floor(calculation * denominator) / denominator))"
+                                //                                splitCostLabel.text = "$\(String(format: "%.2f", calculation))"
+                            }
+                            
+                        }
                     }
+                    
+                    
+                    //                    if floor(calculation * denominator) / denominator < Double(text[rangeTotal])! {
+                    //                        print(floor(calculation * denominator) / denominator)
+                    //                        print(Double(billText[rangeBill])!)
+                    //                        splitCostLabel.text = "$\(String(format: "%.2f", calculation))"
+                    //                    } else {
+                    //                        splitCostLabel.text = "$\(String(format: "%.2f",floor(calculation * denominator) / denominator))"
+                    //                    }
                 } else if roundDirection == 2 {
                     splitCostLabel.text = "$\(String(format: "%.2f",ceil(calculation * denominator) / denominator))"
                 } else {
