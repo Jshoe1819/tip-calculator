@@ -66,31 +66,37 @@ class ViewController: UIViewController, UITextFieldDelegate {
                     totalCostLabel.text = "$\(text)"
                     updateTip()
                     updateTotalCost()
+                    updateSplitCost()
                 } else {
                     billTotalTextField.text = "$\(text)"
                     totalCostLabel.text = "$\(text)"
                     updateTip()
                     updateTotalCost()
+                    updateSplitCost()
                 }
             } else if text == "$." {
                 billTotalTextField.text = "$0."
                 totalCostLabel.text = "$0."
                 updateTip()
                 updateTotalCost()
+                updateSplitCost()
             } else if text == "$0" {
                 billTotalTextField.text = "$"
                 totalCostLabel.text = "$"
                 updateTip()
                 updateTotalCost()
+                updateSplitCost()
             }
             else if text != "" {
                 totalCostLabel.text = text
                 updateTip()
                 updateTotalCost()
+                updateSplitCost()
             } else {
                 totalCostLabel.text = "$0.00"
                 updateTip()
                 updateTotalCost()
+                updateSplitCost()
             }
             
         }
@@ -99,37 +105,37 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     @objc func tipTotalTextFieldDidChange(_ textField: UITextField) {
         //use model to calculate tip%
-        if let text = tipTotalTextField.text {
-            if text.first == "$" {
-                let tipDouble = Double(text.dropFirst())
-                print("\(String(describing: tipDouble))")
-            } else {
-                let tipDouble = Double(text)
-                print("\(String(describing: tipDouble))")
-            }
-            
-            if text.count == 1 && !text.contains("$") {
-                if text.first == "." {
-                    tipTotalTextField.text = "$0\(text)"
-                    //tipPercentLabel.text = "\(tipTotalTextField.text as! Double / billTotalTextField.text as! Double)"
-                } else {
-                    tipTotalTextField.text = "$\(text)"
-                    //totalCostLabel.text = "$\(text)"
-                }
-            } else if text == "$." {
-                tipTotalTextField.text = "$0."
-                //totalCostLabel.text = "$0."
-            } else if text == "$0" {
-                tipTotalTextField.text = "$"
-                //totalCostLabel.text = "$"
-            }
-            else if text != "" {
-                //totalCostLabel.text = text
-            } else {
-                //totalCostLabel.text = "$0.00"
-            }
-            
-        }
+//        if let text = tipTotalTextField.text {
+//            if text.first == "$" {
+//                let tipDouble = Double(text.dropFirst())
+//                print("\(String(describing: tipDouble))")
+//            } else {
+//                let tipDouble = Double(text)
+//                print("\(String(describing: tipDouble))")
+//            }
+//
+//            if text.count == 1 && !text.contains("$") {
+//                if text.first == "." {
+//                    tipTotalTextField.text = "$0\(text)"
+//                    //tipPercentLabel.text = "\(tipTotalTextField.text as! Double / billTotalTextField.text as! Double)"
+//                } else {
+//                    tipTotalTextField.text = "$\(text)"
+//                    //totalCostLabel.text = "$\(text)"
+//                }
+//            } else if text == "$." {
+//                tipTotalTextField.text = "$0."
+//                //totalCostLabel.text = "$0."
+//            } else if text == "$0" {
+//                tipTotalTextField.text = "$"
+//                //totalCostLabel.text = "$"
+//            }
+//            else if text != "" {
+//                //totalCostLabel.text = text
+//            } else {
+//                //totalCostLabel.text = "$0.00"
+//            }
+//
+//        }
         
     }
     
@@ -195,13 +201,16 @@ class ViewController: UIViewController, UITextFieldDelegate {
     func updateSplitCost() {
         if let text = totalCostLabel.text {
             if text != "" || text != "$" {
+                let denominator = 4.0
                 let start = text.index(text.startIndex, offsetBy: 1)
                 let end = text.endIndex
                 let range = start..<end
                 //print("HI: \(text[range])")
                 let calculation = Double(text[range])! / Double(splitSlider.value)
                 //print(calculation)
-                splitCostLabel.text = "$\(String(format: "%.2f", calculation))"
+                splitCostLabel.text = "$\(String(round(calculation * denominator) / denominator))"
+
+//                splitCostLabel.text = "$\(String(format: "%.2f", calculation))"
             }
             
         } else {
