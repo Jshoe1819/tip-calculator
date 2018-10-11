@@ -201,14 +201,36 @@ class ViewController: UIViewController, UITextFieldDelegate {
     func updateSplitCost() {
         if let text = totalCostLabel.text {
             if text != "" || text != "$" {
-                let denominator = 4.0
+                
                 let start = text.index(text.startIndex, offsetBy: 1)
                 let end = text.endIndex
                 let range = start..<end
                 //print("HI: \(text[range])")
                 let calculation = Double(text[range])! / Double(splitSlider.value)
+                
+                let roundTo = incrementSelectorController.selectedSegmentIndex
+                let roundDirection = roundSelectorController.selectedSegmentIndex
+                
+                var denominator = 4.0
+                
+                if roundTo == 1 {
+                    denominator = 2.0
+                } else if roundTo == 2 {
+                    denominator = 1.0
+                }
+                
+                if roundDirection == 0 {
+                    splitCostLabel.text = "$\(String(floor(calculation * denominator) / denominator))"
+                } else if roundDirection == 2 {
+                    splitCostLabel.text = "$\(String(ceil(calculation * denominator) / denominator))"
+                } else {
+                    splitCostLabel.text = "$\(String(format: "%.2f", calculation))"
+                }
+            
+                //print(roundTo)
+                //let denominator = 4.0
                 //print(calculation)
-                splitCostLabel.text = "$\(String(round(calculation * denominator) / denominator))"
+                //splitCostLabel.text = "$\(String(ceil(calculation * denominator) / denominator))"
 
 //                splitCostLabel.text = "$\(String(format: "%.2f", calculation))"
             }
@@ -224,7 +246,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         //change tip textfield
         let roundedValue = round(tipSlider.value)
         tipSlider.value = roundedValue
-        print(tipSlider.value)
+        //print(tipSlider.value)
         tipPercentLabel.text = "\(Int(tipSlider.value))%"
         updateTip()
         updateTotalCost()
@@ -247,16 +269,25 @@ class ViewController: UIViewController, UITextFieldDelegate {
         
         if index == 0 {
             //round down split cost to selected round to
+            updateSplitCost()
             incrementSelectorController.isEnabled = true
         } else if index == 2 {
             //round up split cost to selected round to
+            updateSplitCost()
             incrementSelectorController.isEnabled = true
         } else {
+            updateSplitCost()
             incrementSelectorController.selectedSegmentIndex = 0
             incrementSelectorController.isEnabled = false
         }
         
     }
+    
+    @IBAction func incrementSelectControllerPressed(_ sender: Any) {
+        print("press")
+        updateSplitCost()
+    }
+    
     
 }
 

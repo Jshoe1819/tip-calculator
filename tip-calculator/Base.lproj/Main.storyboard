@@ -165,6 +165,9 @@
                                             <segment title="$1.00"/>
                                         </segments>
                                         <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <connections>
+                                            <action selector="incrementSelectControllerPressed:" destination="BYZ-38-t0r" eventType="valueChanged" id="EBX-cg-Kbj"/>
+                                        </connections>
                                     </segmentedControl>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MS8-aE-rA6">
                                         <rect key="frame" x="0.0" y="140" width="375" height="2"/>
