@@ -220,19 +220,14 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 }
                 
                 if roundDirection == 0 {
-                    splitCostLabel.text = "$\(String(floor(calculation * denominator) / denominator))"
+                    //need logic to make sure not less than split cost
+                    splitCostLabel.text = "$\(String(format: "%.2f",floor(calculation * denominator) / denominator))"
                 } else if roundDirection == 2 {
-                    splitCostLabel.text = "$\(String(ceil(calculation * denominator) / denominator))"
+                    splitCostLabel.text = "$\(String(format: "%.2f",ceil(calculation * denominator) / denominator))"
                 } else {
                     splitCostLabel.text = "$\(String(format: "%.2f", calculation))"
                 }
             
-                //print(roundTo)
-                //let denominator = 4.0
-                //print(calculation)
-                //splitCostLabel.text = "$\(String(ceil(calculation * denominator) / denominator))"
-
-//                splitCostLabel.text = "$\(String(format: "%.2f", calculation))"
             }
             
         } else {
@@ -284,7 +279,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func incrementSelectControllerPressed(_ sender: Any) {
-        print("press")
+        //print("press")
         updateSplitCost()
     }
     
