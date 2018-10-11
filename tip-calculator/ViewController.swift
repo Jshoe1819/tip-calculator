@@ -161,7 +161,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     func updateTip() {
         if let text = billTotalTextField.text {
-            if text != "" {
+            if text != "" && text != "$"{
+                //print(text)
                 let start = text.index(text.startIndex, offsetBy: 1)
                 let end = text.endIndex
                 let range = start..<end
@@ -179,7 +180,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     func updateTotalCost() {
         if let text = billTotalTextField.text {
             if let tipText = tipTotalTextField.text {
-                if text != "" {
+                if text != "" && text != "$" {
                     let start = text.index(text.startIndex, offsetBy: 1)
                     let end = text.endIndex
                     let range = start..<end
@@ -202,11 +203,13 @@ class ViewController: UIViewController, UITextFieldDelegate {
         if let text = totalCostLabel.text {
             if text != "" || text != "$" {
                 
-                let start = text.index(text.startIndex, offsetBy: 1)
-                let end = text.endIndex
-                let range = start..<end
+                let startTotal = text.index(text.startIndex, offsetBy: 1)
+                let endTotal = text.endIndex
+                let rangeTotal = startTotal..<endTotal
                 //print("HI: \(text[range])")
-                let calculation = Double(text[range])! / Double(splitSlider.value)
+                let calculation = Double(text[rangeTotal])! / Double(splitSlider.value)
+                
+                //let startBill =
                 
                 let roundTo = incrementSelectorController.selectedSegmentIndex
                 let roundDirection = roundSelectorController.selectedSegmentIndex
@@ -221,7 +224,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 
                 if roundDirection == 0 {
                     //need logic to make sure not less than split cost
-                    if floor(calculation * denominator) / denominator < calculation {
+                    if floor(calculation * denominator) / denominator < Double(text[rangeTotal])! {
+                        print(floor(calculation * denominator) / denominator)
+                        print(Double(text[rangeTotal])!)
                         splitCostLabel.text = "$\(String(format: "%.2f", calculation))"
                     } else {
                         splitCostLabel.text = "$\(String(format: "%.2f",floor(calculation * denominator) / denominator))"
