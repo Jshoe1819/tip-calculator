@@ -6,14 +6,6 @@
 //  Copyright © 2018 Jacob Shoemaker. All rights reserved.
 //
 
-//update split cost based on split slider change
-//change tip % if tip input - model
-//change tip input when slider change - model
-//change total cost with tip change - model
-//adjust total cost - model
-//adjust split cost if round changed - model
-//adjust split cost if round to change - model
-
 import UIKit
 
 class ViewController: UIViewController, UITextFieldDelegate {
@@ -45,8 +37,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
         billTotalTextField.becomeFirstResponder()
         billTotalTextField.delegate = self
         billTotalTextField.addTarget(self, action: #selector(ViewController.billTotalTextFieldDidChange(_:)), for: UIControl.Event.editingChanged)
-        tipTotalTextField.delegate = self
-        tipTotalTextField.addTarget(self, action: #selector(ViewController.tipTotalTextFieldDidChange(_:)), for: UIControl.Event.editingChanged)
+        //tipTotalTextField.delegate = self
+        //tipTotalTextField.addTarget(self, action: #selector(ViewController.tipTotalTextFieldDidChange(_:)), for: UIControl.Event.editingChanged)
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
