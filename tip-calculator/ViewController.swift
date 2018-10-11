@@ -105,37 +105,37 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     @objc func tipTotalTextFieldDidChange(_ textField: UITextField) {
         //use model to calculate tip%
-//        if let text = tipTotalTextField.text {
-//            if text.first == "$" {
-//                let tipDouble = Double(text.dropFirst())
-//                print("\(String(describing: tipDouble))")
-//            } else {
-//                let tipDouble = Double(text)
-//                print("\(String(describing: tipDouble))")
-//            }
-//
-//            if text.count == 1 && !text.contains("$") {
-//                if text.first == "." {
-//                    tipTotalTextField.text = "$0\(text)"
-//                    //tipPercentLabel.text = "\(tipTotalTextField.text as! Double / billTotalTextField.text as! Double)"
-//                } else {
-//                    tipTotalTextField.text = "$\(text)"
-//                    //totalCostLabel.text = "$\(text)"
-//                }
-//            } else if text == "$." {
-//                tipTotalTextField.text = "$0."
-//                //totalCostLabel.text = "$0."
-//            } else if text == "$0" {
-//                tipTotalTextField.text = "$"
-//                //totalCostLabel.text = "$"
-//            }
-//            else if text != "" {
-//                //totalCostLabel.text = text
-//            } else {
-//                //totalCostLabel.text = "$0.00"
-//            }
-//
-//        }
+        //        if let text = tipTotalTextField.text {
+        //            if text.first == "$" {
+        //                let tipDouble = Double(text.dropFirst())
+        //                print("\(String(describing: tipDouble))")
+        //            } else {
+        //                let tipDouble = Double(text)
+        //                print("\(String(describing: tipDouble))")
+        //            }
+        //
+        //            if text.count == 1 && !text.contains("$") {
+        //                if text.first == "." {
+        //                    tipTotalTextField.text = "$0\(text)"
+        //                    //tipPercentLabel.text = "\(tipTotalTextField.text as! Double / billTotalTextField.text as! Double)"
+        //                } else {
+        //                    tipTotalTextField.text = "$\(text)"
+        //                    //totalCostLabel.text = "$\(text)"
+        //                }
+        //            } else if text == "$." {
+        //                tipTotalTextField.text = "$0."
+        //                //totalCostLabel.text = "$0."
+        //            } else if text == "$0" {
+        //                tipTotalTextField.text = "$"
+        //                //totalCostLabel.text = "$"
+        //            }
+        //            else if text != "" {
+        //                //totalCostLabel.text = text
+        //            } else {
+        //                //totalCostLabel.text = "$0.00"
+        //            }
+        //
+        //        }
         
     }
     
@@ -221,13 +221,17 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 
                 if roundDirection == 0 {
                     //need logic to make sure not less than split cost
-                    splitCostLabel.text = "$\(String(format: "%.2f",floor(calculation * denominator) / denominator))"
+                    if floor(calculation * denominator) / denominator < calculation {
+                        splitCostLabel.text = "$\(String(format: "%.2f", calculation))"
+                    } else {
+                        splitCostLabel.text = "$\(String(format: "%.2f",floor(calculation * denominator) / denominator))"
+                    }
                 } else if roundDirection == 2 {
                     splitCostLabel.text = "$\(String(format: "%.2f",ceil(calculation * denominator) / denominator))"
                 } else {
                     splitCostLabel.text = "$\(String(format: "%.2f", calculation))"
                 }
-            
+                
             }
             
         } else {
